@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 활용의 즐거움 - 직장인을 위한 실전 AI 협업</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --color-bg-primary: #FAFAFA;
+            --color-bg-card: #FFFFFF;
+            --color-accent-primary: #4F7EF7;
+            --color-accent-secondary: #FF8C42;
+            --color-text-primary: #1F2937;
+            --color-text-secondary: #6B7280;
+            --color-border: #E5E7EB;
+            --color-shadow: rgba(79, 126, 247, 0.08);
+            
+            --spacing-xs: 8px;
+            --spacing-sm: 16px;
+            --spacing-md: 24px;
+            --spacing-lg: 32px;
+            --spacing-xl: 48px;
+            
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: var(--color-bg-primary);
+            color: var(--color-text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ==================== UTILITY CLASSES ==================== */
+        
+        .container {
+            max-width: 540px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-sm);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-lg {
+            margin-top: var(--spacing-lg);
+        }
+
+        .mb-lg {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        /* ==================== HERO SECTION ==================== */
+        
+        .hero {
+            padding: var(--spacing-xl) var(--spacing-sm);
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #FAFAFA 0%, #F3F4F9 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(79, 126, 247, 0.05) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 140, 66, 0.03) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(20px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background-color: rgba(79, 126, 247, 0.1);
+            color: var(--color-accent-primary);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-lg);
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            letter-spacing: 0.5px;
+        }
+
+        .hero h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: var(--spacing-md);
+            color: var(--color-text-primary);
+        }
+
+        .hero-highlight {
+            color: var(--color-accent-primary);
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-highlight::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background-color: var(--color-accent-secondary);
+            opacity: 0.3;
+        }
+
+        .hero p {
+            font-size: 15px;
+            color: var(--color-text-secondary);
+            line-height: 1.7;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        /* ==================== TOPICS SECTION ==================== */
+        
+        .topics {
+            padding: var(--spacing-xl) var(--spacing-sm);
+            background-color: var(--color-bg-primary);
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+            color: var(--color-text-primary);
+        }
+
+        .topics-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .topic-card {
+            background-color: var(--color-bg-card);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            border: 1px solid var(--color-border);
+            box-shadow: 0 2px 8px var(--color-shadow);
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .topic-card.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .topic-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(79, 126, 247, 0.12);
+            border-color: var(--color-accent-primary);
+        }
+
+        .topic-icon {
+            font-size: 36px;
+            margin-bottom: var(--spacing-md);
+            display: inline-block;
+        }
+
+        .topic-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+            color: var(--color-text-primary);
+        }
+
+        .topic-card p {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+
+        .topic-number {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-accent-primary) 0%, #7B9FFF 100%);
+            color: white;
+            font-weight: 700;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--spacing-md);
+        }
+
+        /* ==================== CTA SECTION ==================== */
+        
+        .cta {
+            padding: var(--spacing-xl) var(--spacing-sm);
+            background: linear-gradient(135deg, rgba(79, 126, 247, 0.05) 0%, rgba(255, 140, 66, 0.03) 100%);
+            text-align: center;
+        }
+
+        .cta-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+            color: var(--color-text-primary);
+        }
+
+        .cta-subtitle {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            background: linear-gradient(135deg, var(--color-accent-primary) 0%, #7B9FFF 100%);
+            color: white;
+            border: none;
+            border-radius: var(--radius-lg);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(79, 126, 247, 0.3);
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(79, 126, 247, 0.4);
+        }
+
+        .cta-button:active {
+            transform: translateY(0);
+        }
+
+        .cta-description {
+            font-size: 13px;
+            color: var(--color-text-secondary);
+            margin-top: var(--spacing-md);
+            font-weight: 500;
+        }
+
+        /* ==================== FOOTER ==================== */
+        
+        .footer {
+            padding: var(--spacing-lg) var(--spacing-sm);
+            background-color: var(--color-bg-card);
+            border-top: 1px solid var(--color-border);
+            text-align: center;
+        }
+
+        .footer p {
+            font-size: 13px;
+            color: var(--color-text-secondary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            font-size: 12px;
+            color: var(--color-accent-primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--color-accent-secondary);
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        
+        @media (max-width: 480px) {
+            :root {
+                --spacing-xl: 36px;
+                --spacing-lg: 24px;
+                --spacing-md: 16px;
+            }
+
+            .hero {
+                min-height: 50vh;
+                padding: var(--spacing-lg) var(--spacing-sm);
+            }
+
+            .hero h1 {
+                font-size: 24px;
+            }
+
+            .hero p {
+                font-size: 14px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+
+            .topic-card {
+                padding: var(--spacing-md);
+            }
+
+            .topic-card h3 {
+                font-size: 16px;
+            }
+
+            .topic-card p {
+                font-size: 13px;
+            }
+
+            .cta-title {
+                font-size: 20px;
+            }
+
+            .cta-button {
+                width: 100%;
+                padding: 14px var(--spacing-md);
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .hero h1 {
+                font-size: 22px;
+            }
+
+            .hero-badge {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+
+            .topics-grid {
+                gap: var(--spacing-sm);
+            }
+
+            .topic-card {
+                padding: var(--spacing-sm);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">AI × 직장인 생산성</div>
+            <h1>
+                <span class="hero-highlight">AI 활용이 막막한</span><br>
+                직장인에게
+            </h1>
+            <p>
+                실무에 바로 적용 가능한 AI 협업 방법을 통해,<br>
+                업무 생산성을 극대화하고 창의적인 일에 집중하는 즐거움을 제공합니다.
+            </p>
+        </div>
+    </section>
+
+    <!-- TOPICS SECTION -->
+    <section class="topics">
+        <div class="container">
+            <h2 class="section-title">어떤 것을 배우나요?</h2>
+            <div class="topics-grid">
+                <div class="topic-card">
+                    <div class="topic-number">1</div>
+                    <div class="topic-icon">🚀</div>
+                    <h3>AI 워크 스마트</h3>
+                    <p>실전 AI 활용법 & 성공 사례</p>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-number">2</div>
+                    <div class="topic-icon">🤖</div>
+                    <h3>AI 동료 만들기</h3>
+                    <p>No-code/Low-code 업무 자동화</p>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-number">3</div>
+                    <div class="topic-icon">📊</div>
+                    <h3>AI로 데이터 인사이트 발견</h3>
+                    <p>데이터 분석 & 시각화</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="cta">
+        <div class="container">
+            <h2 class="cta-title">시작하기</h2>
+            <p class="cta-subtitle">
+                AI 활용에 대해 더 알고 싶으신가요?<br>
+                편하게 이야기 나눠요!
+            </p>
+            <a href="#" class="cta-button">커피챗 신청하기</a>
+            <p class="cta-description">30분, 부담 없이 이야기 나눠요</p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>&copy; 2026 AI 활용 협업. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="#">개인정보</a>
+            <a href="#">이용약관</a>
+            <a href="#">문의하기</a>
+        </div>
+    </footer>
+
+    <script>
+        // IntersectionObserver for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe all topic cards
+        const topicCards = document.querySelectorAll('.topic-card');
+        topicCards.forEach(card => {
+            observer.observe(card);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if (this.getAttribute('href') !== '#') {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
